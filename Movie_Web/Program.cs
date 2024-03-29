@@ -21,7 +21,7 @@ namespace Movie_Web
             {
                 config.DurationInSeconds = 10;
                 config.IsDismissable = true;
-                config.Position = NotyfPosition.BottomRight;
+                config.Position = NotyfPosition.TopRight;
             });
 
             var stringConnectDb = builder.Configuration.GetConnectionString("dbMovie");
@@ -47,7 +47,7 @@ namespace Movie_Web
 
             app.MapControllerRoute(
                 name: "areas",
-                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                pattern: "{area:exists}/{controller}/{action=Index}/{id?}");
 
 
             app.MapControllerRoute(

@@ -415,16 +415,20 @@
             <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
+                    <li class="nav-item nav-category">Admin</li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
-                            <i class="mdi mdi-grid-large menu-icon"></i>
+                        <a class="nav-link" aria-expanded="false"
+                           aria-controls="form-elements" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                            <i class="menu-icon mdi mdi-floor-plan"></i>
                             <span class="menu-title">Dashboard</span>
+                            <i class="menu-arrow"></i>
                         </a>
+
                     </li>
                     <li class="nav-item nav-category">Tài khoản</li>
                     <li class="nav-item">
                         <a class="nav-link" aria-expanded="false"
-                           aria-controls="form-elements" asp-area="Admin" asp-controller="AdminRolesController" asp-action="Index">
+                           aria-controls="form-elements" asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">
                             <i class="menu-icon mdi mdi-floor-plan"></i>
                             <span class="menu-title">Quản lý Vai Trò</span>
                             <i class="menu-arrow"></i>
@@ -433,9 +437,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-expanded="false"
-                           aria-controls="form-elements" asp-area="Admin" asp-controller="AdminPages" asp-action="Index">
+                           aria-controls="form-elements" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">
                             <i class="menu-icon mdi mdi-floor-plan"></i>
-                            <span class="menu-title">Quản lý Page</span>
+                            <span class="menu-title">Quản lý Tài Khoản</span>
                             <i class="menu-arrow"></i>
                         </a>
 
