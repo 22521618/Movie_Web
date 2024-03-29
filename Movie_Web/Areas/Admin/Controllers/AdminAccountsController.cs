@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AppBlog.Helpers;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Movie_Web.Areas.Admin.Models;
 using Movie_Web.Models;
 using PagedList.Core;
 
@@ -35,7 +39,93 @@ namespace Movie_Web.Areas.Admin.Controllers
             ViewBag.CurrentPage = pageNumber;
             return View(models);
         }
-     
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("dang-nhap.html", Name = "Login")]
+
+        public IActionResult Login(string? returnUrl = null)
+        {
+            var taikhoanID = HttpContext.Session.GetString("AccountId");
+            if (taikhoanID != null)
+                return RedirectToAction("Index", "Home", new { Area = "Admin" });
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("dang-nhap.html", Name = "Login")]
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Account? kh = _context.Accounts
+                        .Include(a => a.Role)
+                        .SingleOrDefault(a => a.Email!.ToLower() == model.Email!.ToLower().Trim());
+
+                    if (kh == null)
+                    {
+                        ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
+                        return View(model);
+                    }
+                    string pass;
+                    if (kh.Salt == null)
+                    {
+                        pass = model.Password!.Trim();
+                    }
+                    else
+                    {
+                        //ToMD5()
+                        pass = (model.Password!.Trim() + kh.Salt!.Trim());
+                    }
+                    if (kh.Password!.Trim() != pass)
+                    {
+                        ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
+                        return View(model);
+                    }
+                    //Dang nhap thanh cong
+
+                    //ghi nhan thoi gian dang nhap
+                    kh.LastLogin = DateTime.Now;
+                    _context.Update(kh);
+                    await _context.SaveChangesAsync();
+
+                    var taikhoanID = HttpContext.Session.GetString("AccountId");
+                    //Identity
+                    // luu session makh
+                    HttpContext.Session.SetString("AccountId", kh.AccountId.ToString());
+                    //Identity
+                    var userClaims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, kh.FullName!),
+                        new Claim(ClaimTypes.Email, kh.Email!),
+                        new Claim("AccountId", kh.AccountId.ToString()),
+                        new Claim("RoleId", kh.RoleId!.ToString()!),
+                        new Claim(ClaimTypes.Role, kh.Role!.RoleName!)
+                    };
+                    var grandmaIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                    var userPrincipal = new ClaimsPrincipal(new[] { grandmaIdentity });
+                    await HttpContext.SignInAsync(userPrincipal);
+
+                    //if (Url.IsLocalUrl(returnUrl))
+                    //{
+                    //    return Redirect(returnUrl);
+                    //}
+                    return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                }
+            }
+            catch
+            {
+                return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+            }
+            return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+        }
+
+
 
         // GET: Admin/AdminAccounts/Details/5
         public async Task<IActionResult> Details(int? id)

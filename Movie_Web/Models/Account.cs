@@ -19,9 +19,11 @@ public partial class Account
 
     public int? RoleId { get; set; }
 
-    public DateOnly? LastLogin { get; set; }
+    public DateTime? LastLogin { get; set; }
 
-    public DateOnly? CreateDate { get; set; }
+    public DateTime? CreateDate { get; set; }
+
+    public string? Salt { get; set; }
 
     public virtual ICollection<Rate> Rates { get; set; } = new List<Rate>();
 

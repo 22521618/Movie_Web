@@ -34,6 +34,7 @@ public partial class MoviesContext : DbContext
     public virtual DbSet<Type> Types { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
         => optionsBuilder.UseSqlServer("Data Source=DESKTOP-FC9EO7E;Initial Catalog=MOVIES;User ID=hoangtung;Password=Atng1234567890;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,8 +44,10 @@ public partial class MoviesContext : DbContext
             entity.ToTable("ACCOUNTS");
 
             entity.Property(e => e.AccountId).HasColumnName("AccountID");
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FullName).HasMaxLength(50);
+            entity.Property(e => e.LastLogin).HasColumnType("datetime");
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.Phone).HasMaxLength(15);
             entity.Property(e => e.RoleId).HasColumnName("RoleID");

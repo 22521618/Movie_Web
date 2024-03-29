@@ -15,6 +15,9 @@ namespace Movie_Web
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Add session
+            builder.Services.AddSession();
+
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             builder.Services.AddNotyf(config =>
@@ -28,7 +31,35 @@ namespace Movie_Web
             builder.Services.AddDbContext<MoviesContext>(options => options.UseSqlServer(stringConnectDb));
             builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 
+
+            //Them cache
+
+            builder.Services.AddMemoryCache();
+
+            builder.Services.AddHttpContextAccessor();
+
+            // Configure Cookiee
+            builder.Services.AddAuthentication("CookieAuthentication")
+                .AddCookie("CookieAuthentication", config =>
+                {
+                    config.Cookie.Name = "UserLoginCookie";
+                    config.ExpireTimeSpan = TimeSpan.FromDays(1);
+                    config.LoginPath = "/dang-nhap.html";
+                    config.LogoutPath = "/dang-xuat.html";
+                    config.AccessDeniedPath = "/not-found.html";
+                });
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.Expiration = TimeSpan.FromDays(150);
+                options.ExpireTimeSpan = TimeSpan.FromDays(150);
+            });
+
+
             var app = builder.Build();
+
+            // use Session
+            app.UseSession();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -42,7 +73,7 @@ namespace Movie_Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
