@@ -4,7 +4,7 @@ git clone -b main https://github.com/22521618/Movie_Web.git
 
 // tạo 1 nhánh của ae từ main
 
-git checkout -b <ten-cua-ae> main
+git checkout -b 'ten-cua-ae' main
 
 //làm gì đó bla bla
 
@@ -14,7 +14,7 @@ git add .
 
 // commit sự thay đổi
 
-git commit -m "<viec da lam>"
+git commit -m "viec da lam"
 
 // đẩy lên github
 
