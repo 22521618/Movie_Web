@@ -19,3 +19,11 @@ git commit -m "viec da lam"
 // đẩy lên github
 
 git push
+
+// ktra xung đột ,merge vào nhánh main
+
+git checkout main
+
+git merge 'ten-nhanh-vua-tao-cua ae'
+
+//done
