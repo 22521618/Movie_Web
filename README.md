@@ -26,4 +26,6 @@ git checkout main
 
 git merge 'ten-nhanh-vua-tao-cua ae'
 
+git push
+
 //done
