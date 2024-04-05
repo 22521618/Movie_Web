@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppBlog.Helpers;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Movie_Web.Models;
+using PagedList.Core;
 
 namespace Movie_Web.Areas.Admin.Controllers
 {
@@ -13,17 +16,29 @@ namespace Movie_Web.Areas.Admin.Controllers
     public class AdminCategoriesController : Controller
     {
         private readonly MoviesContext _context;
+        public INotyfService _notifyService { get; }
 
-        public AdminCategoriesController(MoviesContext context)
+        public AdminCategoriesController(MoviesContext context, INotyfService notyfService)
         {
             _context = context;
+            _notifyService = notyfService;
         }
 
         // GET: Admin/AdminCategories
-        public async Task<IActionResult> Index()
+
+        public IActionResult Index(int? page)
         {
-            return View(await _context.Categories.ToListAsync());
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = Utilities.Page_Size;
+            var lsCategories = _context.Categories.OrderByDescending(x => x.CategoryId);
+            PagedList<Category> models = new PagedList<Category>(lsCategories, pageNumber, pageSize);
+            ViewBag.CurrentPage = pageNumber;
+            return View(models);
         }
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Categories.ToListAsync());
+        //}
 
         // GET: Admin/AdminCategories/Details/5
         public async Task<IActionResult> Details(int? id)

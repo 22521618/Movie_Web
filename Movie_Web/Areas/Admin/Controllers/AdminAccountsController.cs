@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AppBlog.Helpers;
+using AspNetCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -29,11 +30,13 @@ namespace Movie_Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminAccounts
+        
 
         public IActionResult Index(int? page)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = Utilities.Page_Size;
+            var pageSize1 = _context.Parameters.FirstOrDefault(x => x.ParameterName == "Page_Size").Value;
+            int pageSize = pageSize1 == null ? 1 : pageSize1.Value;
             var lsAccounts = _context.Accounts.Include(a => a.Role).OrderByDescending(x => x.CreateDate);
             PagedList<Account> models = new PagedList<Account>(lsAccounts, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;

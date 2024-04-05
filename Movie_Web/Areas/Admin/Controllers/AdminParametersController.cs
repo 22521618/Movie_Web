@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppBlog.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Movie_Web.Models;
+using PagedList.Core;
 
 namespace Movie_Web.Areas.Admin.Controllers
 {
@@ -20,11 +22,16 @@ namespace Movie_Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminParameters
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Parameters.ToListAsync());
-        }
 
+        public IActionResult Index(int? page)
+        {
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = Utilities.Page_Size;
+            var lsParameters = _context.Parameters.OrderByDescending(x => x.ParameterId);
+            PagedList<Parameter> models = new PagedList<Parameter>(lsParameters, pageNumber, pageSize);
+            ViewBag.CurrentPage = pageNumber;
+            return View(models);
+        }
         // GET: Admin/AdminParameters/Details/5
         public async Task<IActionResult> Details(int? id)
         {
