@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\images\MovieImageSlider\" />
+    <Folder Include="wwwroot\images\MovieImage\" />
   </ItemGroup>
 
   <ItemGroup>

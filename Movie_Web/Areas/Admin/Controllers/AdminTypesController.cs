@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppBlog.Helpers;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +16,12 @@ namespace Movie_Web.Areas.Admin.Controllers
     public class AdminTypesController : Controller
     {
         private readonly MoviesContext _context;
+        public INotyfService _notifyService { get; }
 
-        public AdminTypesController(MoviesContext context)
+        public AdminTypesController(MoviesContext context, INotyfService notyfService)
         {
             _context = context;
+            _notifyService = notyfService;
         }
 
         // GET: Admin/AdminTypes
@@ -58,8 +63,11 @@ namespace Movie_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                type.TypeAlias = Utilities.SEOUrl(type.TypeName);
                 _context.Add(@type);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Create Success", 2);
                 return RedirectToAction(nameof(Index));
             }
             return View(@type);
@@ -100,8 +108,10 @@ namespace Movie_Web.Areas.Admin.Controllers
             {
                 try
                 {
+                    type.TypeAlias = Utilities.SEOUrl(type.TypeName);
                     _context.Update(@type);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Edit Success", 2);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,6 +159,7 @@ namespace Movie_Web.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete Success", 2);
             return RedirectToAction(nameof(Index));
         }
 

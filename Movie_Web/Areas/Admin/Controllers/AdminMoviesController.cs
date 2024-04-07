@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppBlog.Helpers;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Movie_Web.Models;
 
 namespace Movie_Web.Areas.Admin.Controllers
@@ -13,10 +16,14 @@ namespace Movie_Web.Areas.Admin.Controllers
     public class AdminMoviesController : Controller
     {
         private readonly MoviesContext _context;
+        private readonly IWebHostEnvironment _environment;
+        public INotyfService _notifyService { get; }
 
-        public AdminMoviesController(MoviesContext context)
+        public AdminMoviesController(MoviesContext context, INotyfService notyfService, IWebHostEnvironment environment)
         {
             _context = context;
+            _notifyService = notyfService;
+            _environment = environment;
         }
 
         // GET: Admin/AdminMovies
@@ -33,10 +40,15 @@ namespace Movie_Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            
+
+            // cay vai o
 
             var movie = await _context.Movies
                 .Include(m => m.Country)
                 .Include(m => m.Type)
+                .Include(m => m.Actors)
+                .Include(m => m.Categories)
                 .FirstOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {
@@ -59,12 +71,30 @@ namespace Movie_Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,MovieName,Image,Description,Time,PublishedYear,MovieLink,TypeId,Episode,Viewed,Status,CountryId,Director,MovieLinkContingency,MovieLinkTrailer,ImageSlider,Alias,EpisodeLimit,DirectorAlias")] Movie movie)
+        public async Task<IActionResult> Create([Bind("MovieId,MovieName,Image,Description,Time,PublishedYear,MovieLink,TypeId,Episode,Viewed,Status,CountryId,Director,MovieLinkContingency,MovieLinkTrailer,ImageSlider,Alias,EpisodeLimit,DirectorAlias")] Movie movie, IFormFile? fImage, IFormFile? fImageSlider)
         {
             if (ModelState.IsValid)
             {
+                
+                movie.Alias = Utilities.SEOUrl(movie.MovieName) + "-" + Utilities.SEOUrl(Convert.ToString(movie.Episode));
+                movie.DirectorAlias = Utilities.SEOUrl(movie.Director);
+                if (fImage != null )
+                {
+                    string fileExtension = Path.GetExtension(fImage.FileName);
+                    string newName = Utilities.SEOUrl(movie.MovieName)+ "-image"  +fileExtension;
+                    movie.Image = await Utilities.UploadFile(fImage , @"MovieImage\", newName.ToLower());
+                }
+
+                if (fImageSlider != null)
+                {
+                    string fileExtension = Path.GetExtension(fImageSlider.FileName);
+                    string newName = Utilities.SEOUrl(movie.MovieName) + "-image-slider" + fileExtension;
+                    movie.ImageSlider = await Utilities.UploadFile(fImageSlider, @"MovieImageSlider\", newName.ToLower());
+                }
+               
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Create Success", 2);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CountryId"] = new SelectList(_context.Countries, "CountryId", "CountryName", movie.CountryId);
@@ -334,7 +364,7 @@ namespace Movie_Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,Image,Description,Time,PublishedYear,MovieLink,TypeId,Episode,Viewed,Status,CountryId,Director,MovieLinkContingency,MovieLinkTrailer,ImageSlider,Alias,EpisodeLimit,DirectorAlias")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,Image,Description,Time,PublishedYear,MovieLink,TypeId,Episode,Viewed,Status,CountryId,Director,MovieLinkContingency,MovieLinkTrailer,ImageSlider,Alias,EpisodeLimit,DirectorAlias")] Movie movie, IFormFile? fImage, IFormFile? fImageSlider)
         {
             if (id != movie.MovieId)
             {
@@ -345,7 +375,23 @@ namespace Movie_Web.Areas.Admin.Controllers
             {
                 try
                 {
+                    movie.Alias = Utilities.SEOUrl(movie.MovieName) + "-" + Utilities.SEOUrl(Convert.ToString(movie.Episode));
+                    movie.DirectorAlias = Utilities.SEOUrl(movie.Director);
+                    if (fImage != null)
+                    {
+                        string fileExtension = Path.GetExtension(fImage.FileName);
+                        string newName = Utilities.SEOUrl(movie.MovieName) + "-image" + fileExtension;
+                        movie.Image = await Utilities.UploadFile(fImage, @"MovieImage\", newName.ToLower());
+                    }
+
+                    if (fImageSlider != null)
+                    {
+                        string fileExtension = Path.GetExtension(fImageSlider.FileName);
+                        string newName = Utilities.SEOUrl(movie.MovieName) + "-image-slider" + fileExtension;
+                        movie.ImageSlider = await Utilities.UploadFile(fImageSlider, @"MovieImageSlider\", newName.ToLower());
+                    }
                     _context.Update(movie);
+                    _notifyService.Success("Edit Success", 2);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -396,9 +442,35 @@ namespace Movie_Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.Movies.FindAsync(id);
+
+
+            var movie = await _context.Movies
+                .Include(m => m.Country)
+                .Include(m => m.Type)
+                .Include(m => m.Actors)
+                .Include(m => m.Categories)
+                .FirstOrDefaultAsync(m => m.MovieId == id);
+
+
             if (movie != null)
             {
+
+               
+
+
+                string Path1 = _environment.WebRootPath + "/images/MovieImage/" + movie.Image;
+                System.IO.File.Delete(Path1);
+                string Path2 = _environment.WebRootPath + "/images/MovieImageSlider/" + movie.ImageSlider;
+                System.IO.File.Delete(Path2);
+                
+
+
+                movie.Actors.Clear();
+
+                movie.Categories.Clear();
+
+                _notifyService.Success("Delete Success", 2);
+
                 _context.Movies.Remove(movie);
             }
 

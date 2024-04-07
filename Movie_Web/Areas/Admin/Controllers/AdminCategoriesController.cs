@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using AppBlog.Helpers;
 using AspNetCoreHero.ToastNotification.Abstractions;
@@ -73,8 +74,10 @@ namespace Movie_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                category.CategoriesAlias = Utilities.SEOUrl(category.CategoryName);
                 _context.Add(category);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Create Success", 2);
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -112,8 +115,10 @@ namespace Movie_Web.Areas.Admin.Controllers
             {
                 try
                 {
+                    category.CategoriesAlias = Utilities.SEOUrl(category.CategoryName);
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Edit Success", 2);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -161,6 +166,7 @@ namespace Movie_Web.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete Success", 2);
             return RedirectToAction(nameof(Index));
         }
 

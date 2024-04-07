@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppBlog.Helpers;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +16,12 @@ namespace Movie_Web.Areas.Admin.Controllers
     public class AdminCountriesController : Controller
     {
         private readonly MoviesContext _context;
+        public INotyfService _notifyService { get; }
 
-        public AdminCountriesController(MoviesContext context)
+        public AdminCountriesController(MoviesContext context, INotyfService notyfService)
         {
             _context = context;
+            _notifyService = notyfService;
         }
 
         // GET: Admin/AdminCountries
@@ -58,8 +63,10 @@ namespace Movie_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                country.CountryAlias = Utilities.SEOUrl(country.CountryName);
                 _context.Add(country);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Create Success", 2);
                 return RedirectToAction(nameof(Index));
             }
             return View(country);
@@ -97,8 +104,10 @@ namespace Movie_Web.Areas.Admin.Controllers
             {
                 try
                 {
+                    country.CountryAlias = Utilities.SEOUrl(country.CountryName);
                     _context.Update(country);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Edit Success", 2);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -146,6 +155,7 @@ namespace Movie_Web.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete Success", 2);
             return RedirectToAction(nameof(Index));
         }
 
