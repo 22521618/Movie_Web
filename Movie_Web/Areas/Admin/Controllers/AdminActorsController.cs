@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Movie_Web.Models;
+using PagedList.Core;
 
 namespace Movie_Web.Areas.Admin.Controllers
 {
@@ -24,10 +25,18 @@ namespace Movie_Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminActors
-        public async Task<IActionResult> Index()
+
+        public IActionResult Index(int? page)
         {
-            return View(await _context.Actors.ToListAsync());
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize1 = _context.Parameters.FirstOrDefault(x => x.ParameterName == "Page_Size").Value;
+            int pageSize = pageSize1 == null ? 1 : pageSize1.Value;
+            var lsActors = _context.Actors.OrderByDescending(x => x.ActorId);
+            PagedList<Actor> models = new PagedList<Actor>(lsActors, pageNumber, pageSize);
+            ViewBag.CurrentPage = pageNumber;
+            return View(models);
         }
+       
 
         // GET: Admin/AdminActors/Details/5
         public async Task<IActionResult> Details(int? id)
