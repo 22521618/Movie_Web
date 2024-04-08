@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AppBlog.Extension;
 using AppBlog.Helpers;
 using AspNetCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
@@ -78,14 +79,14 @@ namespace Movie_Web.Areas.Admin.Controllers
                     string pass;
                     if (kh.Salt == null)
                     {
-                        pass = model.Password!.Trim();
+                        pass = model.Password!.ToMD5().Trim();
                     }
                     else
                     {
                         //ToMD5()
-                        pass = (model.Password!.Trim() + kh.Salt!.Trim());
+                        pass = (model.Password!.ToMD5().Trim() + kh.Salt!.Trim());
                     }
-                    if (kh.Password!.Trim() != pass)
+                    if (kh.Password!.ToMD5().Trim() != pass)
                     {
                         ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
                         return View(model);

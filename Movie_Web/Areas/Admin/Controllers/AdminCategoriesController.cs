@@ -42,23 +42,7 @@ namespace Movie_Web.Areas.Admin.Controllers
         //}
 
         // GET: Admin/AdminCategories/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
-        }
-
+        
         // GET: Admin/AdminCategories/Create
         public IActionResult Create()
         {
