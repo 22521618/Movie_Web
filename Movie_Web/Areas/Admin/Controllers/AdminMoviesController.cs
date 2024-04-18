@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Movie_Web.Models;
+using PagedList.Core;
 
 namespace Movie_Web.Areas.Admin.Controllers
 {
@@ -27,13 +28,48 @@ namespace Movie_Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminMovies
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int page = 1, int CountryId = 0)
         {
-            var moviesContext = _context.Movies.Include(m => m.Country).Include(m => m.Type);
-            return View(await moviesContext.ToListAsync());
+            var pageNumber = page;
+            var pageSize = 20;
+
+            List<Movie> lsMovies = new List<Movie>();
+            if (CountryId != 0)
+            {
+                lsMovies = _context.Movies
+                .AsNoTracking()
+                .Where(x => x.CountryId == CountryId)
+                .Include(x => x.Country)
+                .OrderByDescending(x => x.MovieId).ToList();
+            }
+            else
+            {
+                lsMovies = _context.Movies
+                .AsNoTracking()
+                .Include(x => x.Country)
+                .OrderByDescending(x => x.MovieId).ToList();
+            }
+            PagedList<Movie> models = new PagedList<Movie>(lsMovies.AsQueryable(),pageNumber, pageSize);
+
+            ViewBag.CurrentCountryId = CountryId;
+            ViewBag.CurrentPage = pageNumber;
+            ViewData["QuocGia"] = new SelectList(_context.Countries, "CountryId", "CountryName", CountryId);
+            return View(models);
+           
         }
 
         // GET: Admin/AdminMovies/Details/5
+
+
+        public IActionResult Filtter(int CountryId = 0)
+        {
+            var url = $"/Admin/AdminMovies?CountryId={CountryId}";
+            if(CountryId == 0)
+            {
+                url = $"/Admin/AdminMovies";
+            }
+            return Json(new {status = "success", redirectUrl = url});
+        }
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -220,6 +256,7 @@ namespace Movie_Web.Areas.Admin.Controllers
                     }
 
                     _context.Update(movie);
+                    _notifyService.Success("AddActor Success", 2);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -340,6 +377,7 @@ namespace Movie_Web.Areas.Admin.Controllers
                     }
 
                     _context.Update(movie);
+                    _notifyService.Success("AddCat Success", 2);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
