@@ -114,23 +114,32 @@ namespace Movie_Web.Areas.Admin.Controllers
                 
                 movie.Alias = Utilities.SEOUrl(movie.MovieName) + "-" + Utilities.SEOUrl(Convert.ToString(movie.Episode));
                 movie.DirectorAlias = Utilities.SEOUrl(movie.Director);
-                if (fImage != null )
+                var movie1 = _context.Movies.FirstOrDefault(x => x.Alias ==  movie.Alias);
+                if (movie1 == null)
                 {
-                    string fileExtension = Path.GetExtension(fImage.FileName);
-                    string newName = Utilities.SEOUrl(movie.MovieName)+ "-image"  +fileExtension;
-                    movie.Image = await Utilities.UploadFile(fImage , @"MovieImage\", newName.ToLower());
-                }
+                    if (fImage != null)
+                    {
+                        string fileExtension = Path.GetExtension(fImage.FileName);
+                        string newName = Utilities.SEOUrl(movie.MovieName) + "-image" + fileExtension;
+                        movie.Image = await Utilities.UploadFile(fImage, @"MovieImage\", newName.ToLower());
+                    }
 
-                if (fImageSlider != null)
+                    if (fImageSlider != null)
+                    {
+                        string fileExtension = Path.GetExtension(fImageSlider.FileName);
+                        string newName = Utilities.SEOUrl(movie.MovieName) + "-image-slider" + fileExtension;
+                        movie.ImageSlider = await Utilities.UploadFile(fImageSlider, @"MovieImageSlider\", newName.ToLower());
+                    }
+
+                    _context.Add(movie);
+                    await _context.SaveChangesAsync();
+                    _notifyService.Success("Create Success", 2);
+                }
+                else
                 {
-                    string fileExtension = Path.GetExtension(fImageSlider.FileName);
-                    string newName = Utilities.SEOUrl(movie.MovieName) + "-image-slider" + fileExtension;
-                    movie.ImageSlider = await Utilities.UploadFile(fImageSlider, @"MovieImageSlider\", newName.ToLower());
+                    _notifyService.Error("Movie is exist", 2);
                 }
                
-                _context.Add(movie);
-                await _context.SaveChangesAsync();
-                _notifyService.Success("Create Success", 2);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CountryId"] = new SelectList(_context.Countries, "CountryId", "CountryName", movie.CountryId);

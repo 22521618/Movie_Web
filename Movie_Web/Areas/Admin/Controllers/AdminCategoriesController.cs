@@ -77,9 +77,17 @@ namespace Movie_Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 category.CategoriesAlias = Utilities.SEOUrl(category.CategoryName);
-                _context.Add(category);
-                await _context.SaveChangesAsync();
-                _notifyService.Success("Create Success", 2);
+                var category1 = _context.Categories.FirstOrDefault(x => x.CategoriesAlias == category.CategoriesAlias);
+                if (category1 == null)
+                {
+                    _context.Add(category);
+                    await _context.SaveChangesAsync();
+                    _notifyService.Success("Create Success", 2);
+                }
+                else
+                {
+                    _notifyService.Error("Category is exist", 2);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(category);

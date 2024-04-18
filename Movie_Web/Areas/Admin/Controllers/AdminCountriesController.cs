@@ -64,9 +64,17 @@ namespace Movie_Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 country.CountryAlias = Utilities.SEOUrl(country.CountryName);
-                _context.Add(country);
-                await _context.SaveChangesAsync();
-                _notifyService.Success("Create Success", 2);
+                var country1 = _context.Countries.FirstOrDefault(x => x.CountryAlias == country.CountryAlias);
+                if (country1 == null) {
+                    _context.Add(country);
+                    await _context.SaveChangesAsync();
+                    _notifyService.Success("Create Success", 2);
+                }
+                else
+                {
+                    _notifyService.Error("Country is exist", 2);
+                }
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(country);

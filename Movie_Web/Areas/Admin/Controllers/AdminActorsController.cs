@@ -7,6 +7,7 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.FileIO;
 using Movie_Web.Models;
 using PagedList.Core;
 
@@ -72,9 +73,18 @@ namespace Movie_Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 actor.ActorAlias = Utilities.SEOUrl(actor.ActorName);
-                _context.Add(actor);
-                await _context.SaveChangesAsync();
-                _notifyService.Success("Create Success", 2);
+                var actor1 = _context.Actors.FirstOrDefault(x => x.ActorAlias == actor.ActorAlias);
+                if (actor1 == null)
+                {
+                    _context.Add(actor);
+                    await _context.SaveChangesAsync();
+                    _notifyService.Success("Create Success", 2);
+                }
+                else
+                {
+                    _notifyService.Error("Actor is exist", 2);
+                }
+               
                 return RedirectToAction(nameof(Index));
             }
             return View(actor);
