@@ -1,0 +1,15 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Movie_Web.Models.Movie>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="main-content">
+    @if(Model != null && Model.Count() != 0)
+    {
+        foreach(var item in Model)
+        {
+            <h4>@item.MovieName</h4>
+        }
+    }
+    </div>
