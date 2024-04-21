@@ -37,14 +37,16 @@ namespace Movie_Web.Areas.Admin.Controllers
             if (CountryId != 0)
             {
                 lsMovies = _context.Movies
-                .AsNoTracking()
+                .Include(x => x.Type)
                 .Where(x => x.CountryId == CountryId)
                 .Include(x => x.Country)
+                 .AsNoTracking()
                 .OrderByDescending(x => x.MovieId).ToList();
             }
             else
             {
                 lsMovies = _context.Movies
+                .Include(x => x.Type)
                 .AsNoTracking()
                 .Include(x => x.Country)
                 .OrderByDescending(x => x.MovieId).ToList();
