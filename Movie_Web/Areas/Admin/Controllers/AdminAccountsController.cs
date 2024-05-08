@@ -44,90 +44,90 @@ namespace Movie_Web.Areas.Admin.Controllers
             return View(models);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("dang-nhap.html", Name = "Login")]
+        //[HttpGet]
+        //[AllowAnonymous]
+        //[Route("dang-nhap.html", Name = "Login")]
 
-        public IActionResult Login(string? returnUrl = null)
-        {
-            var taikhoanID = HttpContext.Session.GetString("AccountId");
-            if (taikhoanID != null)
-                return RedirectToAction("Index", "Home", new { Area = "Admin" });
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
+        //public IActionResult Login(string? returnUrl = null)
+        //{
+        //    var taikhoanID = HttpContext.Session.GetString("AccountId");
+        //    if (taikhoanID != null)
+        //        return RedirectToAction("Index", "Home", new { Area = "Admin" });
+        //    ViewBag.ReturnUrl = returnUrl;
+        //    return View();
+        //}
 
 
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("dang-nhap.html", Name = "Login")]
-        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    Account? kh = _context.Accounts
-                        .Include(a => a.Role)
-                        .SingleOrDefault(a => a.Email!.ToLower() == model.Email!.ToLower().Trim());
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[Route("dang-nhap.html", Name = "Login")]
+        //public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            Account? kh = _context.Accounts
+        //                .Include(a => a.Role)
+        //                .SingleOrDefault(a => a.Email!.ToLower() == model.Email!.ToLower().Trim());
 
-                    if (kh == null)
-                    {
-                        ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
-                        return View(model);
-                    }
-                    string pass;
-                    if (kh.Salt == null)
-                    {
-                        pass = model.Password!.ToMD5().Trim();
-                    }
-                    else
-                    {
-                        //ToMD5()
-                        pass = (model.Password!.ToMD5().Trim() + kh.Salt!.Trim());
-                    }
-                    if (kh.Password!.ToMD5().Trim() != pass)
-                    {
-                        ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
-                        return View(model);
-                    }
-                    //Dang nhap thanh cong
+        //            if (kh == null)
+        //            {
+        //                ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
+        //                return View(model);
+        //            }
+        //            string pass;
+        //            if (kh.Salt == null)
+        //            {
+        //                pass = model.Password!.ToMD5().Trim();
+        //            }
+        //            else
+        //            {
+        //                //ToMD5()
+        //                pass = (model.Password!.ToMD5().Trim() + kh.Salt!.Trim());
+        //            }
+        //            if (kh.Password!.ToMD5().Trim() != pass)
+        //            {
+        //                ViewBag.Error = "Thông tin đăng nhập chưa chính xác";
+        //                return View(model);
+        //            }
+        //            //Dang nhap thanh cong
 
-                    //ghi nhan thoi gian dang nhap
-                    kh.LastLogin = DateTime.Now;
-                    _context.Update(kh);
-                    await _context.SaveChangesAsync();
+        //            //ghi nhan thoi gian dang nhap
+        //            kh.LastLogin = DateTime.Now;
+        //            _context.Update(kh);
+        //            await _context.SaveChangesAsync();
 
-                    var taikhoanID = HttpContext.Session.GetString("AccountId");
-                    //Identity
-                    // luu session makh
-                    HttpContext.Session.SetString("AccountId", kh.AccountId.ToString());
-                    //Identity
-                    var userClaims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, kh.FullName!),
-                        new Claim(ClaimTypes.Email, kh.Email!),
-                        new Claim("AccountId", kh.AccountId.ToString()),
-                        new Claim("RoleId", kh.RoleId!.ToString()!),
-                        new Claim(ClaimTypes.Role, kh.Role!.RoleName!)
-                    };
-                    var grandmaIdentity = new ClaimsIdentity(userClaims, "User Identity");
-                    var userPrincipal = new ClaimsPrincipal(new[] { grandmaIdentity });
-                    await HttpContext.SignInAsync(userPrincipal);
+        //            var taikhoanID = HttpContext.Session.GetString("AccountId");
+        //            //Identity
+        //            // luu session makh
+        //            HttpContext.Session.SetString("AccountId", kh.AccountId.ToString());
+        //            //Identity
+        //            var userClaims = new List<Claim>
+        //            {
+        //                new Claim(ClaimTypes.Name, kh.FullName!),
+        //                new Claim(ClaimTypes.Email, kh.Email!),
+        //                new Claim("AccountId", kh.AccountId.ToString()),
+        //                new Claim("RoleId", kh.RoleId!.ToString()!),
+        //                new Claim(ClaimTypes.Role, kh.Role!.RoleName!)
+        //            };
+        //            var grandmaIdentity = new ClaimsIdentity(userClaims, "User Identity");
+        //            var userPrincipal = new ClaimsPrincipal(new[] { grandmaIdentity });
+        //            await HttpContext.SignInAsync(userPrincipal);
 
-                    //if (Url.IsLocalUrl(returnUrl))
-                    //{
-                    //    return Redirect(returnUrl);
-                    //}
-                    return RedirectToAction("Index", "Home", new { Area = "Admin" });
-                }
-            }
-            catch
-            {
-                return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
-            }
-            return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
-        }
+        //            //if (Url.IsLocalUrl(returnUrl))
+        //            //{
+        //            //    return Redirect(returnUrl);
+        //            //}
+        //            return RedirectToAction("Index", "Home", new { Area = "Admin" });
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+        //    }
+        //    return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+        //}
 
 
 
@@ -160,19 +160,19 @@ namespace Movie_Web.Areas.Admin.Controllers
         // POST: Admin/AdminAccounts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountId,Email,Phone,Password,Active,FullName,RoleId,LastLogin,CreateDate")] Account account)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(account);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId", account.RoleId);
-            return View(account);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("AccountId,Email,Phone,Password,Active,FullName,RoleId,LastLogin,CreateDate")] Account account)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(account);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId", account.RoleId);
+        //    return View(account);
+        //}
 
         // GET: Admin/AdminAccounts/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -227,7 +227,7 @@ namespace Movie_Web.Areas.Admin.Controllers
             return View(account);
         }
 
-        // GET: Admin/AdminAccounts/Delete/5
+       
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

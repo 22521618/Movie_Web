@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Movie_Web.Areas.Admin.Models
+namespace Movie_Web.ModelsView
 {
     public class LoginViewModel
     {

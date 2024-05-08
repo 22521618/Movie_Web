@@ -1,7 +1,7 @@
-﻿@model Movie_Web.Areas.Admin.Models.LoginViewModel
+﻿@model Movie_Web.ModelsView.LoginViewModel
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdminLogin.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdminLogin.cshtml";
 }
 
 <div class="container-scroller">
@@ -15,7 +15,7 @@
                         </div>
                         <h4>Hello! let's get started</h4>
                         <h6 class="fw-light">Sign in to continue.</h6>
-                        <form class="pt-3" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Login" method="post">
+                        <form class="pt-3" asp-controller="Accounts" asp-action="Login" method="post">
                             <div class="form-group">
                                 <input type="email" asp-for="Email" class="form-control form-control-lg" id="exampleInputEmail1"
                                        placeholder="Username">

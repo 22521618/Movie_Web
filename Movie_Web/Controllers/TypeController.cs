@@ -27,11 +27,13 @@ namespace Movie_Web.Controllers
             {
                 return Redirect("~/Admin/Home");
             }
+
+            // Chi dua ra Alias o tap 1 thoi
             var kieuphim = _context.Types.FirstOrDefault(x => x.TypeAlias == Alias);
             List<Movie> lsMovies = new List<Movie>();
             if(kieuphim != null)
             {
-                lsMovies = _context.Movies.Include(x => x.Type).Where(x => x.Type.TypeAlias == Alias).AsNoTracking().ToList();
+                lsMovies = _context.Movies.Include(x => x.Type).Where(x => x.Type.TypeAlias == Alias && x.Episode == 1).AsNoTracking().ToList();
             }
             else { 
                         return NotFound();
@@ -64,7 +66,7 @@ namespace Movie_Web.Controllers
             var theloai = _context.Categories.FirstOrDefault(x => x.CategoriesAlias == Alias);
             if (theloai != null)
             {
-                lsMovies = _context.Movies.Include(x => x.Categories).Where(x => x.Categories.Any(y => y.CategoriesAlias == Alias)).ToList();
+                lsMovies = _context.Movies.Include(x => x.Categories).Where(x => x.Episode == 1 &&  x.Categories.Any(y => y.CategoriesAlias == Alias)).ToList();
             }
             else
             {
@@ -98,7 +100,7 @@ namespace Movie_Web.Controllers
             var quocgia = _context.Countries.FirstOrDefault(x => x.CountryAlias == Alias);
             if (quocgia != null)
             {
-                lsMovies = _context.Movies.Include(x => x.Country).Where(x => x.Country.CountryAlias == Alias).AsNoTracking().ToList();
+                lsMovies = _context.Movies.Include(x => x.Country).Where(x => x.Country.CountryAlias == Alias && x.Episode == 1).AsNoTracking().ToList();
             }
             else
             {
