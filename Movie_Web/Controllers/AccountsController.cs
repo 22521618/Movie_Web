@@ -127,8 +127,10 @@ namespace Movie_Web.Controllers
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, user.FullName),
+                            
                             new Claim("AccountId",user.AccountId.ToString()),
-                            new Claim("RoleId", user.RoleId!.ToString()!)
+                            new Claim("RoleId", user.RoleId!.ToString()!),
+                            
 
                         };
                         ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "login");
@@ -173,7 +175,7 @@ namespace Movie_Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = _context.Accounts.AsNoTracking().SingleOrDefault(x => x.Email == account.Email);
+                    var user = _context.Accounts.Include(a => a.Role).AsNoTracking().SingleOrDefault(x => x.Email == account.Email);
                     if (user == null)
                     {
                         _notifyService.Error("Thông tin đăng nhập chưa chính xác", 2);
@@ -204,8 +206,10 @@ namespace Movie_Web.Controllers
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.FullName),
+                        new Claim(ClaimTypes.Role, user.Role!.RoleName!),
                         new Claim("AccountId",user.AccountId.ToString()),
-                        new Claim("RoleId", user.RoleId!.ToString()!)
+                        new Claim("RoleId", user.RoleId!.ToString()!),
+                                    
                     };
                     ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "login");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -233,5 +237,21 @@ namespace Movie_Web.Controllers
             }
             return View(account);
         }
+
+        [Route("dang-xuat.html", Name = "Logout")]
+        public IActionResult Logout()
+        {
+            try
+            {
+                HttpContext.SignOutAsync();
+                HttpContext.Session.Remove("AccountId");
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
     }
 }

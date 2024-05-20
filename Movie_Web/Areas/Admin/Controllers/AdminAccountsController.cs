@@ -19,6 +19,7 @@ using PagedList.Core;
 namespace Movie_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminAccountsController : Controller
     {
         private readonly MoviesContext _context;
@@ -264,6 +265,21 @@ namespace Movie_Web.Areas.Admin.Controllers
         private bool AccountExists(int id)
         {
             return _context.Accounts.Any(e => e.AccountId == id);
+        }
+
+        
+        public IActionResult Logout()
+        {
+            try
+            {
+                HttpContext.SignOutAsync();
+                HttpContext.Session.Remove("AccountId");
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }
