@@ -38,6 +38,8 @@
     <script src="~/adminassets/js/template.js"></script>
     <script src="~/adminassets/js/settings.js"></script>
     <script src="~/adminassets/js/todolist.js"></script>
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
     <!-- endinject -->
 </body>
 

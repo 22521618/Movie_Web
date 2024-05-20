@@ -1,6 +1,9 @@
 (function($) {
   'use strict';
-  $(function() {
+    $(function () {
+
+    
+
     if ($("#performanceLine").length) { 
       const ctx = document.getElementById('performanceLine');
       var graphGradient = document.getElementById("performanceLine").getContext('2d');
@@ -399,78 +402,156 @@
         }]
       });
     }
+   
 
-    if ($("#leaveReport").length) { 
-      const leaveReportCanvas = document.getElementById('leaveReport');
-      new Chart(leaveReportCanvas, {
-        type: 'bar',
-        data: {
-          labels: ["Jan","Feb", "Mar", "Apr", "May"],
-          datasets: [{
-              label: 'Last week',
-              data: [18, 25, 39, 11, 24],
-              backgroundColor: "#52CDFF",
-              borderColor: [
-                  '#52CDFF',
-              ],
-              borderWidth: 0,
-              fill: true, // 3: no fill
-              barPercentage: 0.5,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          elements: {
-            line: {
-                tension: 0.4,
-            }
-        },
-          scales: {
-            yAxes: {
-              display: true,
-              grid: {
-                display: false,
-                drawBorder: false,
-                color:"rgba(255,255,255,.05)",
-                zeroLineColor: "rgba(255,255,255,.05)",
-              },
-              ticks: {
-                beginAtZero: true,
-                autoSkip: true,
-                maxTicksLimit: 5,
-                fontSize: 10,
-                color:"#6B778C",
-                font: {
-                  size: 10,
+
+        if ($("#leaveReport").length) {
+            const leaveReportCanvas = document.getElementById('leaveReport');
+            new Chart(leaveReportCanvas, {
+                type: 'bar',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                    datasets: [{
+                        label: 'Last week',
+                        data: [18, 25, 39, 11, 24, 5],
+                        backgroundColor: "#52CDFF",
+                        borderColor: [
+                            '#52CDFF',
+                        ],
+                        borderWidth: 0,
+                        fill: true, // 3: no fill
+                        barPercentage: 0.5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                        line: {
+                            tension: 0.4,
+                        }
+                    },
+                    scales: {
+                        yAxes: {
+                            display: true,
+                            grid: {
+                                display: false,
+                                drawBorder: false,
+                                color: "rgba(255,255,255,.05)",
+                                zeroLineColor: "rgba(255,255,255,.05)",
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                autoSkip: true,
+                                maxTicksLimit: 5,
+                                fontSize: 10,
+                                color: "#6B778C",
+                                font: {
+                                    size: 10,
+                                }
+                            }
+                        },
+                        xAxes: {
+                            display: true,
+                            grid: {
+                                display: false,
+                            },
+                            ticks: {
+                                beginAtZero: false,
+                                autoSkip: true,
+                                maxTicksLimit: 7,
+                                fontSize: 10,
+                                color: "#6B778C",
+                                font: {
+                                    size: 10,
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    }
                 }
-              }
-            },
-            xAxes: {
-              display: true,
-              grid: {
-                display: false,
-              },
-              ticks: {
-                beginAtZero: false,
-                autoSkip: true,
-                maxTicksLimit: 7,
-                fontSize: 10,
-                color:"#6B778C",
-                font: {
-                  size: 10,
-                }
-              }
-            }
-          },
-          plugins: {
-            legend: {
-                display: false,
-            }
-          }
+            });
         }
-      });
-    }
+
+
+        if ($("#leaveRepor1t").length) {
+            const leaveReportCanva1s = document.getElementById('leaveRepor1t');
+            new Chart(leaveReportCanva1s, {
+                type: 'bar',
+                data: {
+                    labels: ["July", "Aug", "Sep", "Oct", "Nov","Dec"],
+                    datasets: [{
+                        label: 'Last week',
+                        data: [3,14,49,20,36,12],
+                        backgroundColor: "#52CDFF",
+                        borderColor: [
+                            '#52CDFF',
+                        ],
+                        borderWidth: 0,
+                        fill: true, // 3: no fill
+                        barPercentage: 0.5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                        line: {
+                            tension: 0.4,
+                        }
+                    },
+                    scales: {
+                        yAxes: {
+                            display: true,
+                            grid: {
+                                display: false,
+                                drawBorder: false,
+                                color: "rgba(255,255,255,.05)",
+                                zeroLineColor: "rgba(255,255,255,.05)",
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                autoSkip: true,
+                                maxTicksLimit: 5,
+                                fontSize: 10,
+                                color: "#6B778C",
+                                font: {
+                                    size: 10,
+                                }
+                            }
+                        },
+                        xAxes: {
+                            display: true,
+                            grid: {
+                                display: false,
+                            },
+                            ticks: {
+                                beginAtZero: false,
+                                autoSkip: true,
+                                maxTicksLimit: 7,
+                                fontSize: 10,
+                                color: "#6B778C",
+                                font: {
+                                    size: 10,
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    }
+                }
+            });
+        }
+
+
+
 
     
   });

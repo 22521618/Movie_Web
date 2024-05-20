@@ -15,6 +15,7 @@ namespace Movie_Web.Controllers
 
         public IActionResult Index()
         {
+            //Chi day phim co tap 1 ra thoi
             return View();
         }
 
