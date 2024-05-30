@@ -479,6 +479,8 @@ namespace Movie_Web.Areas.Admin.Controllers
             var movie = await _context.Movies
                 .Include(m => m.Country)
                 .Include(m => m.Type)
+                .Include(m=> m.Actors)
+                .Include(m=> m.Categories)
                 .FirstOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {
@@ -510,9 +512,18 @@ namespace Movie_Web.Areas.Admin.Controllers
 
 
                 string Path1 = _environment.WebRootPath + "/images/MovieImage/" + movie.Image;
-                System.IO.File.Delete(Path1);
+                if(System.IO.File.Exists(Path1))
+                {
+                    
+                    System.IO.File.Delete(Path1);
+                }
+               
                 string Path2 = _environment.WebRootPath + "/images/MovieImageSlider/" + movie.ImageSlider;
-                System.IO.File.Delete(Path2);
+                if (System.IO.File.Exists(Path2))
+                {
+                    System.IO.File.Delete(Path2);
+                }
+                
                 
 
 
