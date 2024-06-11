@@ -1,4 +1,5 @@
 using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Movie_Web.Models;
 using System.Text.Encodings.Web;
@@ -71,7 +72,7 @@ namespace Movie_Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseNotyf();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

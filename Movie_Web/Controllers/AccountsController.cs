@@ -27,49 +27,14 @@ namespace Movie_Web.Controllers
         {
             return View();
         }
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult ValidationPhone(string phone)
-        //{
-        //    try
-        //    {
-        //        var user = _context.Accounts.AsNoTracking().SingleOrDefault(x => x.Phone.ToLower() == phone);
-        //        if (user != null)
-        //        {
-        //            return Json(data: "So dien thoai: " + phone + "da duoc su dung");
-        //        }
-        //        return Json(data: true);
-        //    }
-        //    catch
-        //    {
-        //        return Json(data: true);
-        //    }
-        //}
-
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult ValidationEmail(string email)
-        //{
-        //    try
-        //    {
-        //        var user = _context.Accounts.AsNoTracking().SingleOrDefault(x => x.Email == email);
-        //        if (user != null)
-        //        {
-        //            return Json(data: "Email: " + email + "da duoc su dung");
-        //        }
-        //        return Json(data: true);
-        //    }
-        //    catch
-        //    {
-        //        return Json(data: true);
-        //    }
-        //}
+      
 
         [HttpGet]
         [AllowAnonymous]
         [Route("dang-ky.html", Name = "DangKy")]
         public IActionResult DangKyTaiKhoan()
         {
+            
             return View();
 
         }
@@ -88,14 +53,10 @@ namespace Movie_Web.Controllers
                     if (user1 != null)
                     {
                         _notifyService.Error("Email nay da duoc su dung", 2);
+                        ViewBag.Error = "Email này đã được sử dụng";
                         return View(taikhoan);
                     }
-                    var user2 = _context.Accounts.AsNoTracking().SingleOrDefault(x => x.Phone.ToLower() == taikhoan.Phone);
-                    if (user2 != null)
-                    {
-                        _notifyService.Error("SDT nay da duoc su dung", 2);
-                        return View(taikhoan);
-                    }
+                   
                     if (taikhoan.Password != taikhoan.ConfirmPassword)
                     {
                         _notifyService.Error("Mat khau xac nhan phai giong nhau", 2);
@@ -106,7 +67,7 @@ namespace Movie_Web.Controllers
                     {
                         FullName = taikhoan.FullName,
                         Email = taikhoan.Email.Trim().ToLower(),
-                        Phone = taikhoan.Phone.Trim().ToLower(),
+                        
                         Password = taikhoan.Password.Trim().ToMD5(),
                         Active = true,
                         CreateDate = DateTime.Now,
