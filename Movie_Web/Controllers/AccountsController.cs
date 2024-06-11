@@ -34,6 +34,7 @@ namespace Movie_Web.Controllers
         [Route("dang-ky.html", Name = "DangKy")]
         public IActionResult DangKyTaiKhoan()
         {
+            
             return View();
 
         }
@@ -52,6 +53,7 @@ namespace Movie_Web.Controllers
                     if (user1 != null)
                     {
                         _notifyService.Error("Email nay da duoc su dung", 2);
+                        ViewBag.Error = "Email này đã được sử dụng";
                         return View(taikhoan);
                     }
                    

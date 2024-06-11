@@ -1,4 +1,5 @@
 using AppBlog.Helpers;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Movie_Web.Data;
@@ -14,17 +15,20 @@ namespace Movie_Web.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private readonly MoviesContext _context;
-      
-        public HomeController(ILogger<HomeController> logger, MoviesContext context)
+        private readonly INotyfService _notifyService;
+        public HomeController(ILogger<HomeController> logger, MoviesContext context, INotyfService notyfService)
         {
             _logger = logger;
             _context = context;
+            _notifyService = notyfService;
         }
 
         public IActionResult Index(int? page)
         {
+            
+
             int currentMonth = DateTime.Now.Month;
-            if(currentMonth == 1)
+            if (currentMonth == 1)
             {
                 var bien = _context.Parameters.FirstOrDefault(x => x.ParameterName == "SoLuotXem_1");
                 bien.Value++;
@@ -85,7 +89,8 @@ namespace Movie_Web.Controllers
                 bien.Value++;
             }
 
-            _context.SaveChangesAsync();
+          
+
             var taikhoanID = HttpContext.Session.GetString("AccountId");
             
             if(taikhoanID != null)
@@ -100,7 +105,7 @@ namespace Movie_Web.Controllers
             }
 
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 3;
+            var pageSize = 15;
             List<Movie> listMovieHot = _context.Movies.Include(a => a.Categories).Where(a => a.Episode == 1 && a.Status == true).AsNoTracking().ToList();
            
             List<Country> listCountry = _context.Countries.Take(9).AsNoTracking().ToList();
@@ -118,6 +123,8 @@ namespace Movie_Web.Controllers
             ViewBag.Cat = listCategory;
             ViewBag.Country = listCountry;
             ViewBag.SoTrangMax = SoTrangMax;
+
+            _context.SaveChangesAsync();
 
             return View(models);
         }

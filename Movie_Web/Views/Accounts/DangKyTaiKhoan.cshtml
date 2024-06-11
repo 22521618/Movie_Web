@@ -130,6 +130,7 @@
                         <input asp-for="ConfirmPassword" id="password_confirmation"  placeholder="Nhập lại mật khẩu" type="password" class="form-control">
                         <span class="form-message"></span>
                     </div>
+                    <p class="mg-b-0" style="color:red">@ViewBag.Error</p>
                     <div class="policy-text">
                         <input type="checkbox" id="policy">
                         <label for="policy">

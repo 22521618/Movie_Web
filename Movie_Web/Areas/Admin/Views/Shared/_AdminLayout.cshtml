@@ -70,7 +70,7 @@
                             <input type="search" class="form-control" placeholder="Search Here" title="Search here">
                         </form>
                     </li>
-                    <li class="nav-item dropdown">
+                    @* <li class="nav-item dropdown">
                         <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                             <i class="icon-bell"></i>
                             <span class="count"></span>
@@ -109,8 +109,8 @@
                                 </div>
                             </a>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown">
+                    </li> *@
+                    @* <li class="nav-item dropdown">
                         <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="icon-mail icon-lg"></i>
                         </a>
@@ -149,7 +149,7 @@
                                 </div>
                             </a>
                         </div>
-                    </li>
+                    </li> *@
                     <li class="nav-item dropdown d-none d-lg-block user-dropdown">
                         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <img class="img-xs rounded-circle" src="~/adminassets/images/favicon1.jpg" alt="Profile image">
@@ -157,11 +157,12 @@
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <div class="dropdown-header text-center">
                                 <!--faces/face8.jpg-->
-                                <img class="img-md rounded-circle" src="~/adminassets/images/faces/face8.jpg" alt="Profile image">
+                              @*   <img class="img-md rounded-circle" src="~/adminassets/images/favicon1.jpg" alt="Profile image"> *@
+                                <img class="img-xs rounded-circle" src="~/adminassets/images/favicon1.jpg" alt="Profile image">
                                 <p class="mb-1 mt-3 font-weight-semibold">Hoang Tung</p>
                                 <p class="fw-light text-muted mb-0">alotetahihi@gmail.com</p>
                             </div>
-                            <a class="dropdown-item">
+                           @*  <a class="dropdown-item">
                                 <i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My
                                 Profile <span class="badge badge-pill badge-danger">1</span>
                             </a>
@@ -176,7 +177,7 @@
                             <a href="doi-mat-khau.html" class="dropdown-item">
                                 <i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i>
                                 Change Password
-                            </a>
+                            </a> *@
                             <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Logout" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
                         </div>
                     </li>

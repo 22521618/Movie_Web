@@ -28,6 +28,7 @@ namespace Movie_Web.Areas.Admin.Controllers
         // GET: Admin/AdminRoles
         public async Task<IActionResult> Index()
         {
+            
             return View(await _context.Roles.ToListAsync());
         }
 
@@ -64,9 +65,18 @@ namespace Movie_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(role);
-                await _context.SaveChangesAsync();
-                _notifyService.Success("Create Success", 2);
+                var role1 = _context.Roles.FirstOrDefault(m => m.RoleName == role.RoleName);
+                if (role1 == null)
+                {
+                    _context.Add(role);
+                    await _context.SaveChangesAsync();
+                    _notifyService.Success("Create Success", 2);
+                }
+                else
+                {
+                    _notifyService.Error("Role is exist", 2);
+
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(role);

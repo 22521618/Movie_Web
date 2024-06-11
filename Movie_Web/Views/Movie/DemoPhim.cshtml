@@ -1,35 +1,19 @@
 ﻿@model Movie_Web.Models.Movie
 @{
-    
+
     ViewData["Title"] = "Demo Flix";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int movieId = Model.MovieId;
 }
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="~/cineflix-master/assets/images/icon.png" type="image/png">
-    <title>HTKM</title>
+    <script src="/lib/jquery//dist/jquery.js">  </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js">  </script>
+    <script type="text/javascript">
+        
+    </script>
 
-    <!--
-      - custom css link
-    -->
-    <link rel="stylesheet" href="~/cineflix-master/assets/css/intro.css">
-    <link rel="stylesheet" href="~/cineflix-master/assets/css/media_query_intro.css">
-    <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
 
-    <!--
-      - google font link
-    -->
-    <link href="https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900" rel="stylesheet" />
-    <link href='https://fonts.googleapis.com/css?family=Alata' rel='stylesheet'>
-</head>
-
-<body>
 
 
 
@@ -55,7 +39,7 @@
                 </button>
 
                 <a asp-controller="Home" asp-action="Index" class="navbar-brand">
-                    <img src="~/cineflix-master/assets/images/logo.png" alt="">
+                <img src="~/cineflix-master/assets/images/logo_newest.png" />
                 </a>
 
                 <!-- navbar navigation -->
@@ -102,11 +86,13 @@
 
                 <!-- search and sign-in -->
                 <div class="navbar-actions">
-                    <form action="#" class="navbar-form">
+                <form action="/tim-kiem/" class="navbar-form">
                         <input type="text" name="search" placeholder="I'm looking for..." class="navbar-form-search">
+                        
                         <button class="navbar-form-btn">
                             <ion-icon name="search-outline"></ion-icon>
                         </button>
+                    
                         <button class="navbar-form-close">
                             <ion-icon name="close-circle-outline"></ion-icon>
                         </button>
@@ -173,30 +159,44 @@
                     <div class="rating-film">
                         <strong>Rating:</strong>
                         <div class="stars">
-                            <form action="">
-                                <input class="star star-10" id="star-10" type="radio" name="star" />
+                            <div>
+                            <div class="star-rating">
+                                <input class="star star-10" id="star-10" type="radio" name="star" value="10" onclick="submitRating(this.value)" />
                                 <label class="star star-10" for="star-10"></label>
-                                <input class="star star-9" id="star-9" type="radio" name="star" />
+                                <input class="star star-9" id="star-9" type="radio" name="star" value="9" onclick="submitRating(this.value)" />
                                 <label class="star star-9" for="star-9"></label>
-                                <input class="star star-8" id="star-8" type="radio" name="star" />
+                                <input class="star star-8" id="star-8" type="radio" name="star" value="8" onclick="submitRating(this.value)" />
                                 <label class="star star-8" for="star-8"></label>
-                                <input class="star star-7" id="star-7" type="radio" name="star" />
+                                <input class="star star-7" id="star-7" type="radio" name="star" value="7" onclick="submitRating(this.value)" />
                                 <label class="star star-7" for="star-7"></label>
-                                <input class="star star-6" id="star-6" type="radio" name="star" />
+                                <input class="star star-6" id="star-6" type="radio" name="star" value="6" onclick="submitRating(this.value)" />
                                 <label class="star star-6" for="star-6"></label>
-                                <input class="star star-5" id="star-5" type="radio" name="star" />
+                                <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="submitRating(this.value)" />
                                 <label class="star star-5" for="star-5"></label>
-                                <input class="star star-4" id="star-4" type="radio" name="star" />
+                                <input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="submitRating(this.value)" />
                                 <label class="star star-4" for="star-4"></label>
-                                <input class="star star-3" id="star-3" type="radio" name="star" />
+                                <input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="submitRating(this.value)" />
                                 <label class="star star-3" for="star-3"></label>
-                                <input class="star star-2" id="star-2" type="radio" name="star" />
+                                <input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="submitRating(this.value)" />
                                 <label class="star star-2" for="star-2"></label>
-                                <input class="star star-1" id="star-1" type="radio" name="star" />
+                                <input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="submitRating(this.value)" />
                                 <label class="star star-1" for="star-1"></label>
-                            </form>
+                            </div>
+                            </div>
                         </div>
+
+                    
+                        
                     </div>
+                   @*  <div class="rating-film">
+                        <strong>Đánh giá:</strong>
+                        <div class="stars">
+                            <div>
+                                <input class="star start-11" id=" start-11" type="radio" name="star" />
+                                <label class="star  start-11" for=" start-11"></label>
+                            </div>
+                        </div>
+                    </div> *@
                 </div>
 
                 <div class="info-container">
@@ -296,7 +296,18 @@
 
                         <li class="info eps">
                             <strong>Rating:</strong>
-                            <span class="imdb">9.8</span>
+                        @{
+                            if(ViewBag.Rating == null)
+                            {
+                                <span class="imdb">0.0</span>
+                            }
+                            else
+                            {
+                                string a = ViewBag.Rating.ToString();
+                                <span class="imdb">@a</span>
+                            }
+                        }
+                            
                         </li>
                         <li class="info eps">
                             <strong>Chất lượng:</strong>
@@ -370,6 +381,12 @@
                 -->
                 <div class="comment-section">
                     <!-- Khung bình luận giống Facebook sẽ được đặt ở đây -->
+                    @{
+                        string urlDemo = ViewBag.UrlDemoPhim.ToString();
+                        string urlDemoPhim = $"/demophim/{urlDemo}";
+                    }
+
+                    <div class="fb-comments" data-href="@urlDemoPhim" data-width="100%" data-numposts="7"></div>
                 </div>
         </main>
         <!--
@@ -380,7 +397,7 @@
             <div class="footer-content">
 
                 <div class="footer-brand">
-                    <img src="~/cineflix-master/assets/images/logo.png" alt="" class="footer-logo">
+                <img src="~/cineflix-master/assets/images/logo_newest.png" alt="" class="footer-logo">
                     <p class="slogan">
                         Movies & TV Shows, Online cinema,
                         Movie database HTML Template.
@@ -473,19 +490,31 @@
     </div>
 
 
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function submitRating(starValue) {
+            $.ajax({
+                url: '/Movie/SubmitRating',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ rating: starValue, movieID: @movieId}),
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message, '', { timeout: 2000 });
+                       
+                    } else {
+                        toastr.error(response.message, '', { timeout: 2000 });
+                       
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    </script>
+}
 
 
 
-    <!--
-      - custom js link
-    -->
-    <script src="~/cineflix-master/assets/js/main.js"></script>
-
-    <!--
-      - ionicon link
-    -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-</body>
-
-</html>

@@ -67,9 +67,18 @@ namespace Movie_Web.Areas.Admin.Controllers
             {
                 
                 type.TypeAlias = Utilities.SEOUrl(type.TypeName);
-                _context.Add(@type);
-                await _context.SaveChangesAsync();
-                _notifyService.Success("Create Success", 2);
+                var type1 = _context.Types.FirstOrDefault(x => x.TypeAlias == type.TypeAlias);
+                if(type1 == null)
+                {
+                    _context.Add(@type);
+                    await _context.SaveChangesAsync();
+                    _notifyService.Success("Create Success", 2);
+                }
+                else
+                {
+                    _notifyService.Error("Type is exist", 2);
+                }
+               
                 return RedirectToAction(nameof(Index));
             }
             return View(@type);

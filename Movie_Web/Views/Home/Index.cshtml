@@ -52,9 +52,9 @@
                 <span class="two"></span>
                 <span class="three"></span>
             </button>
-
+            
             <a asp-controller="Home" asp-action="Index" class="navbar-brand">
-                <img src="~/cineflix-master/assets/images/logo.png" alt="">
+                <img src="~/cineflix-master/assets/images/logo_newest.png" />
             </a>
 
             <!-- navbar navigation -->
@@ -101,14 +101,12 @@
 
             <!-- search and sign-in -->
             <div class="navbar-actions">
-                <form action="#" class="navbar-form">
+                <form action="/tim-kiem/" class="navbar-form">
                     <input type="text" name="search" placeholder="I'm looking for..." class="navbar-form-search">
                     <button class="navbar-form-btn">
                         <ion-icon name="search-outline"></ion-icon>
                     </button>
-                    <button class="navbar-form-close">
-                        <ion-icon name="close-circle-outline"></ion-icon>
-                    </button>
+                   
                 </form>
 
                 <!-- search button for small screen -->
@@ -292,20 +290,12 @@
 
                     <select name="genre" class="genre">
                         <option value="all genres">All genres</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="animal">Animal</option>
-                        <option value="animation">Animation</option>
-                        <option value="biography">Biography</option>
+                       
                     </select>
 
                     <select name="year" class="year">
                         <option value="all years">All the years</option>
-                        <option value="2022">2022</option>
-                        <option value="2020-2021">2020-2021</option>
-                        <option value="2010-2019">2010-2019</option>
-                        <option value="2000-2009">2000-2009</option>
-                        <option value="1980-1999">1980-1999</option>
+                      
                     </select>
 
                 </div>
@@ -334,7 +324,7 @@
 
                                     <div class="rating">
                                         <ion-icon name="star-outline"></ion-icon>
-                                        <span>8.9</span>
+                                        <span>N/A</span>
                                     </div>
 
                                     <div class="play">
@@ -355,418 +345,7 @@
                 }
                
 
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/spider-men.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>7.4</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Spider-Man: Homecoming</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Action/Adventure</span>
-                            <span class="year">2017</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/matrix.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>N/A</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">The Matrix Resurrections</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Sci-fi/Action</span>
-                            <span class="year">2021</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/eternals.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>6.8</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Eternals</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Adventure/Action</span>
-                            <span class="year">2021</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/dune.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>8.2</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Dune</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Sci-fi/Adventure</span>
-                            <span class="year">2021</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/1917.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>8.3</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">1917</h3>
-
-                        <div class="card-info">
-                            <span class="genre">War/Drama</span>
-                            <span class="year">2019</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/shang-chi.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>7.6</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Shang-Chi and The Legend of The Ten Rings</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Action/Fantasy</span>
-                            <span class="year">2021</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/casino-royale.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>8.0</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Casino Royale</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Action/Adventure</span>
-                            <span class="year">2006</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/dark-knight.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>9.0</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">The Dark Knight</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Action/Adventure</span>
-                            <span class="year">2008</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/panther.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>7.3</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Black Panther</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Action/Adventure</span>
-                            <span class="year">2018</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/venom.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>6.7</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Venom</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Action/Adventure</span>
-                            <span class="year">2018</span>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-
-
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/gladiator.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>8.5</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Gladiator</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Action/Adventure</span>
-                            <span class="year">2000</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="movie-card">
-
-                    <div class="card-head">
-                        <img src="~/cineflix-master/assets/images/movies/endgame.jpg" alt="" class="card-img">
-
-                        <div class="card-overlay">
-
-                            <div class="bookmark">
-                                <ion-icon name="bookmark-outline"></ion-icon>
-                            </div>
-
-                            <div class="rating">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>8.4</span>
-                            </div>
-
-                            <div class="play">
-                                <ion-icon name="play-circle-outline"></ion-icon>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Avengers: Endgame</h3>
-
-                        <div class="card-info">
-                            <span class="genre">Action/Sci-fi</span>
-                            <span class="year">2019</span>
-                        </div>
-                    </div>
-
-                </div>
+                
 
                 
             </div>
@@ -930,7 +509,7 @@
             <div class="footer-content">
 
                 <div class="footer-brand">
-                    <img src="~/cineflix-master/assets/images/logo.png" alt="" class="footer-logo">
+                   <img src="~/cineflix-master/assets/images/logo_newest.png" alt="" class="footer-logo">
                     <p class="slogan">
                         Movies & TV Shows, Online cinema,
                         Movie database HTML Template.
@@ -1024,7 +603,8 @@
 
 
 
-
+        @await Component.InvokeAsync("Notyf")
+        
 
         <!--
           - custom js link

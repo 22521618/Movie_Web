@@ -118,7 +118,7 @@ namespace Movie_Web.Areas.Admin.Controllers
                 
                 movie.Alias = Utilities.SEOUrl(movie.MovieName) + "-" + Utilities.SEOUrl(Convert.ToString(movie.Episode));
                 movie.DirectorAlias = Utilities.SEOUrl(movie.Director);
-                var movie1 = _context.Movies.FirstOrDefault(x => x.Alias ==  movie.Alias);
+                var movie1 = _context.Movies.FirstOrDefault(x => x.Alias ==  movie.Alias && x.Episode == movie.Episode );
                 if (movie1 == null)
                 {
                     if (fImage != null)
@@ -141,7 +141,7 @@ namespace Movie_Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    _notifyService.Error("Movie is exist", 2);
+                    _notifyService.Error("Movie đã tồn tại, Hãy xóa movie này trc khi thêm", 2);
                 }
                
                 return RedirectToAction(nameof(Index));

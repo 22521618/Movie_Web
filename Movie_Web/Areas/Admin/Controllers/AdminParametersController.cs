@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppBlog.Helpers;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,10 +18,12 @@ namespace Movie_Web.Areas.Admin.Controllers
     public class AdminParametersController : Controller
     {
         private readonly MoviesContext _context;
+        public INotyfService _notifyService { get; }
 
-        public AdminParametersController(MoviesContext context)
+        public AdminParametersController(MoviesContext context, INotyfService notyfService)
         {
             _context = context;
+            _notifyService = notyfService;
         }
 
         // GET: Admin/AdminParameters
@@ -67,8 +70,19 @@ namespace Movie_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(parameter);
-                await _context.SaveChangesAsync();
+               var parameter1 = _context.Parameters.FirstOrDefault(x => x.ParameterName == parameter.ParameterName);
+                if(parameter1 == null)
+                {
+                    _context.Add(parameter);
+                    await _context.SaveChangesAsync();
+                    _notifyService.Success("Create Success", 2);
+                  
+                }
+                else
+                {
+                    _notifyService.Error("Prameter is Exist", 2);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(parameter);

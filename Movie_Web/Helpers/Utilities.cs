@@ -95,6 +95,45 @@ namespace AppBlog.Helpers
             return url;
         }
 
+
+        public static string HandleString(string? url)
+        {
+            if (url == null) return "";
+            // Chuyển đổi url thành chữ thường
+            url = url.ToLower();
+
+            // Thay thế các ký tự tiếng Việt bằng ký tự không dấu tương ứng
+            url = Regex.Replace(url, @"[áàảãạăắằẳẵặâấầẩẫậ]", "a");
+            url = Regex.Replace(url, @"[éèẻẽẹêếềểễệ]", "e");
+            url = Regex.Replace(url, @"[óòỏõọôốồổỗộơớờởỡợ]", "o");
+            url = Regex.Replace(url, @"[íìỉĩị]", "i");
+            url = Regex.Replace(url, @"[ýỳỷỹỵ]", "y");
+            url = Regex.Replace(url, @"[úùủũụưứừửữự]", "u");
+            url = Regex.Replace(url, @"[đ]", "d");
+
+            // Loại bỏ các ký tự không phải là chữ và số
+            url = Regex.Replace(url.Trim(), @"[^0-9a-z\s]", "").Trim();
+
+            // Thay thế các khoảng trắng bằng dấu gạch ngang
+           
+
+            // Loại bỏ các dấu gạch ngang kép
+            while (true)
+            {
+                if (url.IndexOf("--") != -1)
+                {
+                    url = url.Replace("--", "-");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            // Trả về url đã được tối ưu
+            return url;
+        }
+
     }
 }
 

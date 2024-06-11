@@ -1,9 +1,10 @@
-﻿@using PagedList.Core.Mvc
-@model PagedList.Core.IPagedList<Movie_Web.Models.Movie>
+﻿
+@model List<Movie_Web.Models.Movie>
 @{
     ViewData["Title"] = "Index";
     Layout = null;
 }
+
 
 
 <!DOCTYPE html>
@@ -168,12 +169,21 @@
                 -->
                 <div class="filter-bar">
                     @{
-                       
-                        <h1>
-                                <span>Các bộ phim @ViewBag.tenTheLoai</span>
-                         </h1>
-               
-                        
+                        if(ViewBag.CountPhim >= 1)
+                        {
+                            <h1>
+                                <span>Các bộ phim theo từ khóa "@ViewBag.Alias"</span>
+                            </h1>
+                        }
+                        else
+                        {
+                            <h1>
+                                <span>Không có bộ phim nào có từ khóa "@ViewBag.Alias"</span>
+                            </h1>
+                        }
+                     
+
+
                     }
 
                 </div>
@@ -224,72 +234,17 @@
 
                 </div>
 
-                <div>
-                    <ul class="pagination">
-                        @{
-                            int IndexTenTrai = ViewBag.CurrentPage - 1;
-                            int IndexTenPhai = ViewBag.CurrentPage + 1;
-                            int pageMax = ViewBag.SoTrangMax;
-                            if (IndexTenTrai <= 0)
-                            {
-                                <li class="pagination-item">
-                                    <a href="" class="pagination-item__link">
-                                        <i class="pagination-item__icon fas fa-angle-left"></i>
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-
-                                string urlMuiTenTrai = $"/the-loai/{ViewBag.Alias}/page={IndexTenTrai}";
-
-                                <li class="pagination-item">
-                                    <a href="@urlMuiTenTrai" class="pagination-item__link">
-                                        <i class="pagination-item__icon fas fa-angle-left"></i>
-                                    </a>
-                                </li>
-                            }
-
-                            for (int i = 1; i <= pageMax; i++)
-                            {
-                                string urlPage = $"/the-loai/{ViewBag.Alias}/page={i}";
-                                if (i == ViewBag.CurrentPage)
-                                {
-                                    <li class="pagination-item--active">
-                                        <a href="@urlPage" class="pagination-item__link">@i</a>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="pagination-item">
-                                        <a href="@urlPage" class="pagination-item__link">@i</a>
-                                    </li>
-                                }
-
-                            }
-
-                            if (IndexTenPhai > pageMax)
-                            {
-                                <li class="pagination-item">
-                                    <a href="" class="pagination-item__link">
-                                        <i class="pagination-item__icon fas fa-angle-right"></i>
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-
-                                string urlMuiTenPhai = $"/the-loai/{ViewBag.Alias}/page={IndexTenPhai}";
-
-                                <li class="pagination-item">
-                                    <a href="@urlMuiTenPhai" class="pagination-item__link">
-                                        <i class="pagination-item__icon fas fa-angle-right"></i>
-                                    </a>
-                                </li>
-                            }
+               @*  @{
+                    if (ViewBag.similarMovies.Count > 0)
+                    {
+                        foreach (var movies in ViewBag.similarMovies)
+                        {
+                            <h1>@movies</h1>
                         }
-                    </ul>
-                </div>
+                    }
+                } *@
+
+               
             </section>
 
 

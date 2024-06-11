@@ -1,31 +1,70 @@
 'use strict';
 
 // variables for navbar menu toggle
-const header = document.querySelector('header');
-const nav = document.querySelector('nav');
-const navbarMenuBtn = document.querySelector('.navbar-menu-btn');
+//const header = document.querySelector('header');
+//const nav = document.querySelector('nav');
+//const navbarMenuBtn = document.querySelector('.navbar-menu-btn');
 
-// variables for navbar search toggle
-const navbarForm = document.querySelector('.navbar-form');
-const navbarFormCloseBtn = document.querySelector('.navbar-form-close');
-const navbarSearchBtn = document.querySelector('.navbar-search-btn');
+//// variables for navbar search toggle
+//const navbarForm = document.querySelector('.navbar-form');
+//const navbarFormCloseBtn = document.querySelector('.navbar-form-close');
+//const navbarSearchBtn = document.querySelector('.navbar-search-btn');
+
+//// navbar menu toggle function
+//function navIsActive() {
+//    header.classList.toggle('active');
+//    nav.classList.toggle('active');
+//    navbarMenuBtn.classList.toggle('active');
+//}
+
+//navbarMenuBtn.addEventListener('click', navIsActive);
+
+//// navbar search toggle function
+//const searchBarIsActive = () => {
+//    navbarForm.classList.toggle('active')
+
+//};
+
+//navbarSearchBtn.addEventListener('click', searchBarIsActive);
+//navbarFormCloseBtn.addEventListener('click', searchBarIsActive);
+
+//document.addEventListener("DOMContentLoaded", function () {
+//    const form = document.querySelector(".navbar-form");
+//    const searchInput = document.querySelector(".navbar-form-search");
+
+//    form.addEventListener("submit", function (event) {
+//        event.preventDefault(); 
+//        const searchValue = search.value; 
+//        console.log(searchValue); 
+//    });
+//});
+
+//document.addEventListener("DOMContentLoaded", function () {
+//    var form = document.querySelector('.navbar-form');
+//    var input = form.querySelector('.navbar-form-search');
+
+//    form.addEventListener('submit', function (e) {
+//        e.preventDefault();
+//        var searchValue = input.value.trim();
+//        if (searchValue !== '') {
+//            var searchInput = document.createElement('input');
+//            searchInput.type = 'hidden';
+//            searchInput.name = 'search';
+//            searchInput.value = searchValue;
+//            form.appendChild(searchInput);
+//            form.submit();
+//        }
+//    });
+
+//    var closeButton = form.querySelector('.navbar-form-close');
+//    closeButton.addEventListener('click', function () {
+//        input.value = '';
+//    });
+//});
 
 
-// navbar menu toggle function
-function navIsActive() {
-  header.classList.toggle('active');
-  nav.classList.toggle('active');
-  navbarMenuBtn.classList.toggle('active');
-}
-navbarMenuBtn.addEventListener('click', navIsActive);
 
 
-
-// navbar search toggle function
-const searchBarIsActive = () => navbarForm.classList.toggle('active');
-
-navbarSearchBtn.addEventListener('click', searchBarIsActive);
-navbarFormCloseBtn.addEventListener('click', searchBarIsActive);
 //slide-bar
 let slideIndex = 0;
 const slides = document.querySelectorAll('.banner-card');

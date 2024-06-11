@@ -152,11 +152,11 @@ namespace Movie_Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminAccounts/Create
-        public IActionResult Create()
-        {
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //    ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+        //    return View();
+        //}
 
         // POST: Admin/AdminAccounts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
