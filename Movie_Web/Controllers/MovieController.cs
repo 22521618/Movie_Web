@@ -115,7 +115,10 @@ namespace Movie_Web.Controllers
                 string[] parts = alias_phim.Split('-');
                 string lastPart = parts[parts.Length - 1];
 
-                string aliasTenPhim = alias_phim.Replace(lastPart, "");
+                int lastPartIndex = alias_phim.LastIndexOf("-" + lastPart);
+                string aliasTenPhim = alias_phim.Substring(0, lastPartIndex + 1);
+
+                //string aliasTenPhim = alias_phim.Replace(lastPart, "");
 
                 
                

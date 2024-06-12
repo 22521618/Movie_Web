@@ -63,12 +63,15 @@ namespace Movie_Web.Controllers
                         ViewBag.Error = "Mat khau xac nhan phai giong nhau";
                         return View(taikhoan);
                     }
+
+
                     Account user = new Account
                     {
                         FullName = taikhoan.FullName,
                         Email = taikhoan.Email.Trim().ToLower(),
                         
                         Password = taikhoan.Password.Trim().ToMD5(),
+
                         Active = true,
                         CreateDate = DateTime.Now,
                         RoleId = 2

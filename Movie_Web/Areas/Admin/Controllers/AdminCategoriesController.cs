@@ -36,6 +36,7 @@ namespace Movie_Web.Areas.Admin.Controllers
             var lsCategories = _context.Categories.OrderByDescending(x => x.CategoryId);
             PagedList<Category> models = new PagedList<Category>(lsCategories, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
+           
             return View(models);
         }
         //public async Task<IActionResult> Index()

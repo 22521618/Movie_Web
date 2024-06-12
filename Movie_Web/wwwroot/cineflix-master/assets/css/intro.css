@@ -102,13 +102,13 @@ nav { margin-right: 20px; }
 
 .dropdown-content li {
   color: var(--off-white);
-  padding: 8px 12px;
+  padding: 8px 0px;
   text-align: left;
   display: block;
 }
 
-.dropdown-content li:hover {
-  background-color: var(--oxford-blue);
+.dropdown-content a:hover {
+    color: rgb(11,87,196);
 }
 
 /* live indicator style */
