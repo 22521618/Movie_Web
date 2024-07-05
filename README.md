@@ -1,31 +1,7 @@
-// clone vể từ nhánh main
-
-git clone -b main https://github.com/22521618/Movie_Web.git
-
-// tạo 1 nhánh của ae từ main
-
-git checkout -b 'ten-cua-ae' main
-
-//làm gì đó bla bla
-
-// add sự thay đổi
-
-git add .
-
-// commit sự thay đổi
-
-git commit -m "viec da lam"
-
-// đẩy lên github
-
-git push
-
-// ktra xung đột ,merge vào nhánh main
-
-git checkout main
-
-git merge 'ten-nhanh-vua-tao-cua ae'
-
-git push
-
-//done
+To use this app, you need install .net core 8.0, SQl server 2022, visual studio.
+Then you can clone git by url: https://github.com/22521618/Movie_Web.git
+Begin this app by VisualStudio and Run the app
+or you can install docker (MaxOs,Windows or Linux) by url: https://docs.docker.com/engine/install/
+then you can run : "sudo docker pull mcr.microsoft.com/mssql/server:2022-latest" on bashell
+and install "docker pull mcr.microsoft.com/dotnet/runtime" on dockerhub >
+That all, you can run app , and watch movie you like, Beside that, you need network to watch movie from sever hydrax
